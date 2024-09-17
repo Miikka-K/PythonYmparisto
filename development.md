@@ -8,4 +8,4 @@ Development-haarasta luodaan sovelluksen eri toiminnoille (feature) omat haarat.
 |---|---|---|
 dev-app | app.py | Miikka K 
 dev-video | video.py | Marcus
-dev-audio | audio.py | Jakke
+dev-sound | sound.py | Jakke
