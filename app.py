@@ -1,27 +1,25 @@
 # SOVELLUKSEN PÄÄOHJELMA
 # ======================
 
-# KIRJASTOT JA MODUULIT
-# ---------------------
+# KIRJASTOT
+# ---------
 
-# OpenCV-kirjasto videokameraa varten
-import cv2
+# MODUULIT
+# --------
 
-# Winsound-kirjasto äänikorttia varten
-import winsound
+import sound # Äänimerkkimoduuli
+import video # Videomoduuli
+
 
 # ASETUKSET
 # ---------
 
-kameraIndeksi = 0 # Ensimmäinen kamera on aina 0
+kameraIndeksi: int = 0 # Ensimmäinen kamera on aina 0
 
-# Funktiot
-# --------
+sound.parametricBeep(400, 330)
 
-def piippaa():
-    """Tuottaa puolen sekunnin 1kHz äänimerkin"""
-    taajuus = 1000   # Hz
-    kesto   = 500    # ms
-    winsound.Beep(taajuus, kesto)
+# TESTIT
+# ======
 
-piippaa()
+if __name__ == "__main__":
+    pass

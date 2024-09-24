@@ -1,5 +1,7 @@
 # MODUULI VIDEOKUVAN KÄSITTELYYN
 # ==============================
+"""Simple module to capture webcam stream
+ """
 
 # KIRJASTOT JA MODUULIT
 # ---------------------
@@ -33,7 +35,7 @@ def webstream(camIx):
         if not ret:
             print("Ei voi saada videokuvaa, lopetetaan...")
             break
-
+        # TODO: selvitä voiko käyttää funktionäppäimiä
         # päätetään nappi jolla voi lopettaa ohjelman
         cv2.imshow(ikkuna, frame)
         if cv2.waitKey(1) == ord('q'):

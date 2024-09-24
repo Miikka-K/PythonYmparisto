@@ -1,6 +1,7 @@
 # MODUULI ÄÄNIMERKKIEN ANTAMISEEN
 # ===============================
-
+"""A module to produce various sounds and plays wav files.
+"""
 # KIRJASTOT JA MODUULIT
 # ---------------------
 
