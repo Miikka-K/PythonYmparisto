@@ -103,6 +103,8 @@ def checkHetu(hetu):
             month = int(monthPart)
             if month < 1 or month > 12:
                 result = (4, "Kuukausi virheellinen")
+        else:
+            result = (4, "Kuukausi virheellinen")
 
         # Tarkistetaan vuosien oikeellisuus
         if yearPart.isdigit():
@@ -132,7 +134,8 @@ if __name__ == "__main__":
         "A": 2000
     }
 
-    validCenturyCodes = list(centuryCodes.keys())
+    validCenturyCodes = list(centuryCodes.keys()) # listataan
+    validCC = [*centuryCodes.keys()] # toinen tapa listata
 
     # Haetaan vuosisata avaimen perusteella
     print ("Vuosisatakoodi - on ", centuryCodes["-"])
