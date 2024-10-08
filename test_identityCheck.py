@@ -43,11 +43,11 @@ def test_checkHetuMonths():
 
 # Henkilötunnuksessa virheellinen vuosi
 def test_checkHetuYears():
-    assert identityCheck.checkHetu("1307N8-478N") == (5, "Vuosi virheellinen")
+    assert identityCheck.checkHetu("1307-8-478N") == (5, "Vuosi virheellinen")
 
 # Henkilötunnuksessa vuosisata virheellinen
 def test_checkHetuCenturyCode():
-    assert identityCheck.checkHetu("130728sxxxx") == (6, "Vuosisatakoodi virheellinen")
+    assert identityCheck.checkHetu("130728*478N") == (6, "Vuosisatakoodi virheellinen")
 
 # Henkilötunnuksessa
 def test_checkHetuModulo():

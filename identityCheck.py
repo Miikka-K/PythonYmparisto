@@ -1,7 +1,9 @@
 # MODUULI OPISKELIJANUMERON JA HENKILÖTUNNUKSEN TARKISTUKSEEN
 # ===========================================================
+
 """Module makes sanity checks for Raseko student id and the Finnish Social Security Number
 """
+
 # KIRJASTOT JA MODUULIT
 # ---------------------
 
@@ -23,7 +25,6 @@ def opiskelijanumeroOk(opiskelijanumero: str) -> bool:
     if pituus == 5 or pituus == 6:
         if opiskelijanumero.isdigit(): 
             result = True
-
     return result
 
 # Henkilötunnus esimerkki 130728-478N
@@ -49,6 +50,16 @@ def checkHetu(hetu):
     validCenturyCodes = centuryCodes.keys()
     # sanakirja, jossa on jakojäännösten kirjaintunnukset
     modulusSymbols = {
+        0: "0",
+        1: "1",
+        2: "2",
+        3: "3",
+        4: "4",
+        5: "5",
+        6: "6",
+        7: "7",
+        8: "8",
+        9: "9",
         10: "A",
         11: "B",
         12: "C",
@@ -74,15 +85,9 @@ def checkHetu(hetu):
     # Lasketaan hetu-parametrin pituus
     length = len(hetu)
 
-    if length < 11:
-        result = (1, "Henkilötunnus liian lyhyt")
-    
-    if length > 11:
-        result = (2, "Henkilötunnus liian pitkä")
-    
     if length == 11:
-        dayPart = hetu[0:2]
-        monthPart = hetu[2:4]
+        dayPart = str(hetu[0:2])
+        monthPart = str(hetu[2:4])
         yearPart = hetu[4:6]
         centuryPart = hetu [6:7]
         numberPart = hetu [7:10]
@@ -95,9 +100,11 @@ def checkHetu(hetu):
                 result = (3, "Päivä virheellinen")
             if day > 31:
                 result = (3, "Päivä virheellinen")
+
         else:
             result = (3, "Päivä virheellinen")
-        
+
+            
         # Tarkistetaan kuukausien oikeellisuus
         if monthPart.isdigit():
             month = int(monthPart)
@@ -106,20 +113,36 @@ def checkHetu(hetu):
         else:
             result = (4, "Kuukausi virheellinen")
 
+
         # Tarkistetaan vuosien oikeellisuus
         if yearPart.isdigit():
             year = int(yearPart)
-            if year < 0:
-                result = (5, "Vuosi virheellinen")
-        else:
+        else:            
             result = (5, "Vuosi virheellinen")
 
         # TODO: tähän Try-Except, jolla tarkistetaan vuosisatakoodi
+        try:
+            position = list(validCenturyCodes).index(centuryPart)
+        except:
+            result = (6, "Vuosisatakoodi virheellinen")
 
         # TODO: Tähän modulo 31 tarkisteen laskenta ja vertaus syötettyyn
-        return result
+        partsCombined = str(dayPart) + str(monthPart) + str(yearPart) + str(numberPart)
+        if partsCombined.isdigit() and result == (0, "OK"):
+            checkSumCalculated = int(partsCombined)%31
+            if checkSum != modulusSymbols[checkSumCalculated]:
+                result = (7, "Varmistussumma ei täsmää")
+
+    if length < 11:
+        result = (1, "Henkilötunnus liian lyhyt")
+
+    if length > 11:
+        result = (2, "Henkilötunnus liian pitkä")
     return result
 
+
+# KOKEILLAAN ERILAISIA VAIHTOEHTOJA
+# ==================================
 if __name__ == "__main__":
     hetu = "130728-478N"
     paivat = hetu[0:2]
@@ -150,5 +173,18 @@ if __name__ == "__main__":
     try:
         position = validCenturyCodes.index("*")
         print(position)
-    except:
-        print("Väärä indexi annettu")
+    except Exception as e:
+        print("Tapahtui virhe:", e)
+
+    print("ja tämä tulee virheenkäsittelyn jälkeen näkyviin")
+
+    searchLetter = "+"
+
+    for value in validCenturyCodes:
+        if value == searchLetter:
+            found = True
+            break
+        else:
+            found = False
+    if found == False:
+        print("Ei löytynyt")
