@@ -85,6 +85,7 @@ def checkHetu(hetu):
     # Lasketaan hetu-parametrin pituus
     length = len(hetu)
 
+    # Jos pituus oikea tehdään eri osat
     if length == 11:
         dayPart = str(hetu[0:2])
         monthPart = str(hetu[2:4])
@@ -93,14 +94,17 @@ def checkHetu(hetu):
         numberPart = hetu [7:10]
         checkSum = hetu [10]
     
-        # Tarkistetaan päiväosan oikeellisuus
+        # Tarkistetaan päiväosan oikeellisuus, pitää olla pelkkiä numeroita
         if dayPart.isdigit():
             day = int(dayPart)
+
+            # Päivän pitää olla väliltä 1 - 31
             if day < 1:
                 result = (3, "Päivä virheellinen")
             if day > 31:
                 result = (3, "Päivä virheellinen")
 
+        # Jos muuta kuin pelkkiä numeroita
         else:
             result = (3, "Päivä virheellinen")
 
@@ -108,25 +112,27 @@ def checkHetu(hetu):
         # Tarkistetaan kuukausien oikeellisuus
         if monthPart.isdigit():
             month = int(monthPart)
+
+            # Kuukausi pitää olla väliltä 1 - 12
             if month < 1 or month > 12:
                 result = (4, "Kuukausi virheellinen")
         else:
             result = (4, "Kuukausi virheellinen")
 
 
-        # Tarkistetaan vuosien oikeellisuus
+        # Tarkistetaan vuosien oikeellisuus, pitää olla pelkkiä numeroita
         if yearPart.isdigit():
             year = int(yearPart)
         else:            
             result = (5, "Vuosi virheellinen")
 
-        # TODO: tähän Try-Except, jolla tarkistetaan vuosisatakoodi
+        # Tarkistetaan vuosisatakoodi
         try:
             position = list(validCenturyCodes).index(centuryPart)
         except:
             result = (6, "Vuosisatakoodi virheellinen")
 
-        # TODO: Tähän modulo 31 tarkisteen laskenta ja vertaus syötettyyn
+        # Lasketaan modulo 31 tarkiste ja verrataan sitä syötetyn HeTu:n tarkisteeseen
         partsCombined = str(dayPart) + str(monthPart) + str(yearPart) + str(numberPart)
         if partsCombined.isdigit() and result == (0, "OK"):
             checkSumCalculated = int(partsCombined)%31
@@ -144,47 +150,4 @@ def checkHetu(hetu):
 # KOKEILLAAN ERILAISIA VAIHTOEHTOJA
 # ==================================
 if __name__ == "__main__":
-    hetu = "130728-478N"
-    paivat = hetu[0:2]
-    kuukaudet = hetu[2:4]
-    #print(paivat)
-    #print(kuukaudet)
-    
-    # Vuosisatakoodien sanakirja
-    centuryCodes = {
-        "+": 1800,
-        "-": 1900,
-        "A": 2000
-    }
-
-    validCenturyCodes = list(centuryCodes.keys()) # listataan
-    validCC = [*centuryCodes.keys()] # toinen tapa listata
-
-    # Haetaan vuosisata avaimen perusteella
-    print ("Vuosisatakoodi - on ", centuryCodes["-"])
-
-    # Vuosisatakoodien avaimet listana
-    print("Sallitut vuosisatakoodit ovat ", validCenturyCodes)
-
-    # Haetaan olemattomalla avaimella
-    # print("Vuosisatakoodi * on", centuryCodes["*"])
-
-    # Haetaan indeksinumero listan jäsenelle
-    try:
-        position = validCenturyCodes.index("*")
-        print(position)
-    except Exception as e:
-        print("Tapahtui virhe:", e)
-
-    print("ja tämä tulee virheenkäsittelyn jälkeen näkyviin")
-
-    searchLetter = "+"
-
-    for value in validCenturyCodes:
-        if value == searchLetter:
-            found = True
-            break
-        else:
-            found = False
-    if found == False:
-        print("Ei löytynyt")
+    pass
