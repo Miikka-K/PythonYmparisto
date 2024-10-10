@@ -94,11 +94,30 @@ class NationalSSN:
             raise ValueError("Invalid century code") # Nostetaan virhe jos century code on väärä
 
         dateOfBirth = datetime(fullYear,month,day)
+        # Muotoillaan päivämäärä muodossa päivä.kuukausi.vuosi
+
         return dateOfBirth
+    
+    def formatDateOfBirth(self) -> str:
+
+        dateOfBirth = self.getDateOfBirth()
+        # Muotoillaan päivämäärä muodossa päivä.kuukausi.vuosi
+        formattedDateOfBirth = dateOfBirth.strftime("%d.%m.%Y")
+
+        return formattedDateOfBirth
 
     # Lasketaan ikä nyt täysinä vuosina
-    def calculateAge(self, arg):
-        pass
+    def calculateAge(self) -> int:
+        # Syntymäpäivä
+        birth = self.getDateOfBirth()
+        
+        # Haetaan tämä päivä
+        currentDate = datetime.now()
+        
+        # Lasketaan ikä
+        age = currentDate.year - birth.year - ((currentDate.month, currentDate.day) < (birth.month, birth.day))
+        
+        return age
     
     # Tarkistetaan onko ssn oikein
     def isValid(self, arg):
@@ -108,7 +127,8 @@ class NationalSSN:
 # ---------------------
 
 if __name__ == "__main__":
-    hetu1 = NationalSSN('111256-8101')
+    hetu1 = NationalSSN('090493-8101')
     print(hetu1.checkSsnLengthOk())
     print(hetu1.splitSsn())
-    print(hetu1.getDateOfBirth())
+    print(hetu1.formatDateOfBirth())
+    print(hetu1.calculateAge())
